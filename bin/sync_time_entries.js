@@ -40,7 +40,7 @@ Syncer.prototype = {
         console.log("Check new timeEntries")
         this.redmine.getTimeEntries({limit:1}).then(function(data) {
             TimeEntry.countQ().then(function(dbCount){
-                var totalCount         = data.total_count;
+                var totalCount         = 452//data.total_count;
                 var lackingTimeEntries = totalCount - dbCount;
                 var limit              = 100;
                 var requestCount       = Math.floor(lackingTimeEntries/limit);
@@ -61,7 +61,8 @@ Syncer.prototype = {
                             console.log('Done');
                             process.exit();
                         },function(e){
-                            throw e;
+                            console.error(e);
+                            process.exit();
                         });
                     } else {
                         sentRequests++;
@@ -69,14 +70,16 @@ Syncer.prototype = {
                             offset -= limit;
                             iterateRequest();
                         },function(e){
-                            throw e;
-                        });
+            console.error(e);
+            process.exit();
+        });
                     }
                 }
                 iterateRequest();
             });
         },function(e){
-            throw e;
+            console.error(e);
+            process.exit();
         });
     },
 
