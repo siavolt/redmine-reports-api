@@ -61,8 +61,7 @@ Syncer.prototype = {
                             console.log('Done');
                             process.exit();
                         },function(e){
-                            console.error(e);
-                            process.exit();
+                            throw e;
                         });
                     } else {
                         sentRequests++;
@@ -70,16 +69,14 @@ Syncer.prototype = {
                             offset -= limit;
                             iterateRequest();
                         },function(e){
-            console.error(e);
-            process.exit();
-        });
+                            throw e;
+                        });
                     }
                 }
                 iterateRequest();
             });
         },function(e){
-            console.error(e);
-            process.exit();
+            throw e;
         });
     },
 
